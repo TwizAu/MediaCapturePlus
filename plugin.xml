@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-mediacaptureplus" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>MediaCapturePlus</name>
+
+    <js-module name="MediaCapturePlus" src="www/MediaCapturePlus.js">
+        <clobbers target="MediaCapturePlus" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="MediaCapturePlus">
+                <param name="android-package" value="cordova.plugin.mediacaptureplus.MediaCapturePlus" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/MediaCapturePlus.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+    </platform>
+
+</plugin>

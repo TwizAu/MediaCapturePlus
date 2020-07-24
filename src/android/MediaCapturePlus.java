@@ -21,7 +21,7 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void coolMethod(String message, CallbackContext callbackContext) {
-        Toast.makeText(getBaseContext(), "Test", Toast.LENGTH_SHORT).show();
+        //Try setting a label on the dashboard to the message variable
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {

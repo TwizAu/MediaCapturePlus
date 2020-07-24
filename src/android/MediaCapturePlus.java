@@ -21,7 +21,7 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void coolMethod(String message, CallbackContext callbackContext) {
-        Toast.madeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT).show();
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {

@@ -20,6 +20,6 @@ public class MediaCapturePlus extends CordovaPlugin {
 
     private void coolMethod(String message, CallbackContext callbackContext) {
         VideoCaptureOptions vo = new VideoCaptureOptions(1920, 16, 9, 240, 60, 8000);
-        callbackContext.success("Resolution: " + vo.getResolutionX() + "x" + (float)vo.getResolutionX()*vo.getAspectRatio() + ", Aspect Ratio: 1:" + vo.getAspectRatio() + ", Recording Duraction (seconds): " + vo.getRecordingTimeLimit() + ", Framerate: " + vo.getFrameRate() + ", Bitrate (Mbit): " + vo.getBitrate()/1000);
+        callbackContext.success("Resolution: " + vo.getResolutionX() + "x" + (int)((float)vo.getResolutionX()*vo.getAspectRatio()) + ", Aspect Ratio: 1:" + vo.getAspectRatio() + ", Recording Duraction (seconds): " + vo.getRecordingTimeLimit() + ", Framerate: " + vo.getFrameRate() + ", Bitrate (Mbit/s): " + vo.getBitrate()/1000);
     }
 }

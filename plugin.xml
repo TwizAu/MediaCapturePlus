@@ -15,6 +15,10 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         <source-file src="src/android/MediaCapturePlus.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+        <source-file src="src/android/VideoCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+        <source-file src="src/android/ImageCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+        <source-file src="src/android/AudioCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
     </platform>
+
 
 </plugin>

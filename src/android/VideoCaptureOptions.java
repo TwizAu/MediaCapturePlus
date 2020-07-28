@@ -18,7 +18,7 @@ public class VideoCaptureOptions {
 
     VideoCaptureOptions(int resolutionX, int aspectRatio, int recordingTimeLimit, int frameRate, int bitrate) {
         this.resolutionX = resolutionX;
-        this.aspectRatio = aspectRatio;
+        this.aspectRatio = (float)aspectRatio;
         this.recordingTimeLimit = recordingTimeLimit;
         this.frameRate = frameRate;
         this.bitrate = bitrate;
@@ -26,7 +26,7 @@ public class VideoCaptureOptions {
 
 	VideoCaptureOptions(int resolutionX, int aspectX, int aspectY, int recordingTimeLimit, int frameRate, int bitrate) {
         this.resolutionX = resolutionX;
-        this.aspectRatio = aspectY/aspectX;
+        this.aspectRatio = (float)aspectY/(float)aspectX;
         this.recordingTimeLimit = recordingTimeLimit;
         this.frameRate = frameRate;
         this.bitrate = bitrate;

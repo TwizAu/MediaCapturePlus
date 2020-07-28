@@ -12,12 +12,12 @@ public class ImageCaptureOptions {
 
 	ImageCaptureOptions(int resolutionX, int aspectRatio) {
         this.resolutionX = resolutionX;
-        this.aspectRatio = aspectRatio;
+        this.aspectRatio = (float)aspectRatio;
     }
 
     ImageCaptureOptions(int resolutionX, int aspectX, int aspectY) {
         this.resolutionX = resolutionX;
-        this.aspectRatio = aspectY/aspectX;
+        this.aspectRatio = (float)aspectY/(float)aspectX;
     }
 
 	public int getResolutionX() {

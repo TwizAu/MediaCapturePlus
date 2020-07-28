@@ -6,8 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.widget.Toast;
-
 public class MediaCapturePlus extends CordovaPlugin {
 
     @Override
@@ -21,11 +19,7 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void coolMethod(String message, CallbackContext callbackContext) {
-        //Try setting a label on the dashboard to the message variable
-        if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
+        VideoCaptureOption vo = new VideoCaptureOption(1920, 16, 9, 240, 60, 8000);
+        callbackContext.success("Resolution: " + vo.getResolutionX() + "x" + vo.getResolutionX()*vo.getAspectRatio() + ", Aspect Ratio: 1:" + vo.getAspectRatio() + ", Recording Duraction (seconds): " + vo.getRecordingTimeLimit() + ", Framerate: " + vo.getFrameRate() + ", Bitrate (Mbit): " + vo.getBitrate()/1000);
     }
 }

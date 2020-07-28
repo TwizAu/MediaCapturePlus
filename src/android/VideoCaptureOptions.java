@@ -10,7 +10,7 @@ public class VideoCaptureOptions {
 
 	VideoCaptureOptions() {
         this.resolutionX = 400;
-        this.aspectRatio = 0.75;
+        this.aspectRatio = 0.75f;
         this.recordingTimeLimit = 180;
         this.frameRate = 25;
         this.bitrate = 2000;

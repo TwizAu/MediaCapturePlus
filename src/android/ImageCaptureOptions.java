@@ -7,7 +7,7 @@ public class ImageCaptureOptions {
 
 	ImageCaptureOptions() {
         this.resolutionX = 400;
-        this.aspectRatio = 0.75;
+        this.aspectRatio = 0.75f;
     }
 
 	ImageCaptureOptions(int resolutionX, int aspectRatio) {

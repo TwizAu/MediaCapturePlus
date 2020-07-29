@@ -6,6 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.provider.MediaStore;
+
 public class MediaCapturePlus extends CordovaPlugin {
 
     @Override
@@ -34,10 +38,10 @@ public class MediaCapturePlus extends CordovaPlugin {
 
     public void onActivityResult(int  requestId, int resultCode, Intent data) {
         if (requestId == 1) {
-            if (resultCode == Activity.RESULT_CANCELLED) {
-                data.getExtra("callbackContext").success("Success - Cancelled!");
+            if (resultCode == Activity.RESULT_CANCELED) {
+                data.getExtras().get("callbackContext").success("Success - Cancelled!");
             } else if (resultCode == Activity.RESULT_OK) {
-                data.getExtra("callbackContext").success("Success - Ok");
+                data.getExtras().get("callbackContext").success("Success - Ok");
             }
         }
     }

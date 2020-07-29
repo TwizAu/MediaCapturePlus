@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 
 public class MediaCapturePlus extends CordovaPlugin {
 
+    CallbackContext temp;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("coolMethod")) {
@@ -31,17 +33,18 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void testOpenCamera(CallbackContext callbackContext) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra("callbackContext", callbackContext); 
+        temp = callbackContext;
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
     }
 
-    public void onActivityResult(int  requestId, int resultCode, Intent data) {
+    public void onActivityResult(int requestId, int resultCode, Intent data) {
         if (requestId == 1) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                data.getExtras().get("callbackContext").success("Success - Cancelled!");
+                temp.success("Success - Cancelled!");
             } else if (resultCode == Activity.RESULT_OK) {
-                data.getExtras().get("callbackContext").success("Success - Ok");
+                temp.success("Success - Ok");
             }
         }
     }

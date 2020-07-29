@@ -35,7 +35,6 @@ public class MediaCapturePlus extends CordovaPlugin {
     private void testOpenCamera(CallbackContext callbackContext) {
         temp = callbackContext;
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 1);
         this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
     }
 

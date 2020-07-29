@@ -27,6 +27,18 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void testOpenCamera(CallbackContext callbackContext) {
-        callbackContext.success("Success!");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra("callbackContext", callbackContext); 
+        startActivityForResult(intent, 1);
+    }
+
+    public void onActivityResult(int  requestId, int resultCode, Intent data) {
+        if (requestId == 1) {
+            if (resultCode == Activity.RESULT_CANCELLED) {
+                data.getExtra("callbackContext").success("Success - Cancelled!");
+            } else if (resultCode == Activity.RESULT_OK) {
+                data.getExtra("callbackContext").success("Success - Ok");
+            }
+        }
     }
 }

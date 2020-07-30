@@ -12,7 +12,7 @@ import android.provider.MediaStore;
 
 public class MediaCapturePlus extends CordovaPlugin {
 
-    CallbackContext temp;
+    public CallbackContext temp;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -33,17 +33,17 @@ public class MediaCapturePlus extends CordovaPlugin {
     }
 
     private void testOpenCamera(CallbackContext callbackContext) {
-        temp = callbackContext;
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        this.temp = callbackContext;
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
     }
 
     public void onActivityResult(int requestId, int resultCode, Intent data) {
         if (requestId == 1) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                temp.success("Success - Cancelled!");
+                this.temp.success("Success - Cancelled!");
             } else if (resultCode == Activity.RESULT_OK) {
-                temp.success("Success - Ok");
+                this.temp.success("Success - Ok");
             }
         }
     }

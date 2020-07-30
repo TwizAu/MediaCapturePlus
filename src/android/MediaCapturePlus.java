@@ -35,7 +35,12 @@ public class MediaCapturePlus extends CordovaPlugin {
     private void testOpenCamera(CallbackContext callbackContext) {
         this.temp = callbackContext;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
+        PackageManager mPm = this.cordova.getActivity().getPackageManager();
+        if(intent.resolveActivity(mPm) != null){
+            this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
+        } else {
+            LOG.d(LOG_TAG, "Error: You don't have a default camera.  Your device may not be CTS complaint.");
+        }
     }
 
     public void onActivityResult(int requestId, int resultCode, Intent data) {

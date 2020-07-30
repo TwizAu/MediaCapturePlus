@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.content.pm.PackageManager;
 
 public class MediaCapturePlus extends CordovaPlugin {
 
@@ -39,7 +40,7 @@ public class MediaCapturePlus extends CordovaPlugin {
         if(intent.resolveActivity(mPm) != null){
             this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
         } else {
-            LOG.d(LOG_TAG, "Error: You don't have a default camera.  Your device may not be CTS complaint.");
+            this.temp.success("Failed!");
         }
     }
 

@@ -7,3 +7,7 @@ exports.coolMethod = function (success, error) {
 exports.testOpenCamera = function (success, error) {
     exec(success, error, 'MediaCapturePlus', 'testOpenCamera');
 };
+
+exports.openImageAssessment = function (success, error) {
+    exec(success, error, 'MediaCapturePlus', 'openImageAssessment');
+};

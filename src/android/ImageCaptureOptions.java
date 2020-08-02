@@ -2,23 +2,23 @@ package cordova.plugin.mediacaptureplus;
 
 public class ImageCaptureOptions {
 
-    private int resolutionX;
-    private float aspectRatio;
+	private int resolutionX;
+	private float aspectRatio;
 
 	ImageCaptureOptions() {
-        this.resolutionX = 400;
-        this.aspectRatio = 0.75f;
-    }
+		this.resolutionX = 400;
+		this.aspectRatio = 0.75f;
+	}
 
 	ImageCaptureOptions(int resolutionX, int aspectRatio) {
-        this.resolutionX = resolutionX;
-        this.aspectRatio = (float)aspectRatio;
-    }
+		this.resolutionX = resolutionX;
+		this.aspectRatio = (float) aspectRatio;
+	}
 
-    ImageCaptureOptions(int resolutionX, int aspectX, int aspectY) {
-        this.resolutionX = resolutionX;
-        this.aspectRatio = (float)aspectY/(float)aspectX;
-    }
+	ImageCaptureOptions(int resolutionX, int aspectX, int aspectY) {
+		this.resolutionX = resolutionX;
+		this.aspectRatio = (float) aspectY / (float) aspectX;
+	}
 
 	public int getResolutionX() {
 		return this.resolutionX;

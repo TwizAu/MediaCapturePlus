@@ -9,7 +9,7 @@ public class ImageAssessmentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String package_name = getApplication().getPackageName();
-        // setContentView(getApplication().getResources().getIdentifier("image_assessment_layout",
-        // "layout", package_name));
+        Resources resources = getApplication().getResources();
+        setContentView(resources.getIdentifier("image_assessment_layout", "layout", package_name));
     }
 }

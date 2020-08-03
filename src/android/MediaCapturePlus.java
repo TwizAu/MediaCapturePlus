@@ -5,7 +5,6 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.ImageAssessmentActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;

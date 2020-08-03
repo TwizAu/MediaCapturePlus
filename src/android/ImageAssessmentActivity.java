@@ -1,5 +1,6 @@
 package cordova.plugin.mediacaptureplus;
 
+import android.content.res.Resources;
 import android.app.Activity;
 import android.os.Bundle;
 

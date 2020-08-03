@@ -14,7 +14,7 @@
             </feature>
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <activity android:name="ImageAssessmentActivity"></activity>
+            <activity android:name="cordova.plugin.mediacaptureplus.ImageAssessmentActivity"></activity>
         </config-file>
         <source-file src="src/android/MediaCapturePlus.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/VideoCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />

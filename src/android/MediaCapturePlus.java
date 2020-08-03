@@ -34,7 +34,6 @@ public class MediaCapturePlus extends CordovaPlugin {
 
     private void openImageAssessment(CallbackContext callbackContext) {
         this.temp = callbackContext;
-        this.temp.success("Test js");
         Context context = this.cordova.getActivity().getApplicationContext();
         Intent intent = new Intent(context, ImageAssessmentActivity.class);
         this.cordova.startActivityForResult((CordovaPlugin) this, intent, 2);

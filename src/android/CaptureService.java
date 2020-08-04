@@ -30,7 +30,7 @@ public class CaptureService extends Activity {
                 .cameraErrorCallback(new CameraErrorListener() {
                     @Override
                     public void onError(@NotNull CameraException e) {
-                        this.callbackContext.error("failed");
+                        callbackContext.error("failed");
                     }
                 })
                 .build();

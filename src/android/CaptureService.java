@@ -22,8 +22,8 @@ public class CaptureService extends Activity {
         fotoapparat = createFotoapparat();
     }
 
-    private CameraView cameraView = new CameraView(getApplicationContext());
-    private FocusView focusView = new FocusView(getApplicationContext());
+    private CameraView cameraView = new CameraView(this);
+    private FocusView focusView = new FocusView(this);
     private Fotoapparat createFotoapparat() {
         return Fotoapparat
                 .with(this)

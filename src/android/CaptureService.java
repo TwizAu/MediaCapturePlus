@@ -7,8 +7,11 @@ import io.fotoapparat.Fotoapparat;
 import io.fotoapparat.error.CameraErrorListener;
 import io.fotoapparat.exception.camera.CameraException;
 import io.fotoapparat.parameter.ScaleType;
+import io.fotoapparat.parameter.Resolution;
 import io.fotoapparat.preview.Frame;
 import io.fotoapparat.preview.FrameProcessor;
+import io.fotoapparat.view.CameraRenderer;
+import io.fotoapparat.view.Preview;
 import org.apache.cordova.CallbackContext;
 import static io.fotoapparat.selector.LensPositionSelectorsKt.back;
 
@@ -20,9 +23,15 @@ public class CaptureService extends Activity {
         fotoapparat = createFotoapparat();
     }
 
+    CameraRenderer cr = new CameraRenderer() {
+        @Override public void setScaleType(@NotNull ScaleType scaleType) { }
+        @Override public void setPreviewResolution(@NotNull Resolution resolution) { }
+        @NotNull @Override public Preview getPreview() { return null; }
+    };
     private Fotoapparat createFotoapparat() {
         return Fotoapparat
                 .with(this)
+                .into(cr)
                 .previewScaleType(ScaleType.CenterCrop)
                 .lensPosition(back())
                 .frameProcessor(new SampleFrameProcessor(callbackContext))

@@ -48,7 +48,7 @@ public class CaptureService extends Activity {
             ))
             .previewFpsRange(highestFps())
             .sensorSensitivity(highestSensorSensitivity())
-            .frameProcessor(new SampleFrameProcessor())
+            .frameProcessor(new SampleFrameProcessor(callbackContext))
             .build();
 
     public void createCaptureService() {

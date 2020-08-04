@@ -8,6 +8,7 @@
     </js-module>
 
     <platform name="android">
+        <framework src="io.fotoapparat:fotoapparat:2.7.0" />
         <edit-config file="res/xml/config.xml" target="/widget" mode="merge">
             <widget xmlns:android="http://schemas.android.com/apk/res/android" />
         </edit-config>
@@ -29,6 +30,7 @@
         <source-file src="src/android/ImageCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/AudioCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/ImageAssessmentActivity.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+        <source-file src="src/android/CaptureService.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/image_assessment_layout.xml" target-dir="res/layout" />
     </platform>
 

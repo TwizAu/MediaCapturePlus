@@ -29,6 +29,18 @@ public class MediaCapturePlus extends CordovaPlugin {
             this.openImageAssessment(callbackContext);
             return true;
         }
+        if (action.equals("createCaptureSrvice")) {
+            this.createCaptureService(callbackContext);
+            return true;
+        }
+        if (action.equals("startCaptureService")) {
+            this.startCaptureService(callbackContext);
+            return true;
+        }
+        if (action.equals("stopCaptureService")) {
+            this.stopCaptureService(callbackContext);
+            return true;
+        }
         return false;
     }
 
@@ -69,5 +81,18 @@ public class MediaCapturePlus extends CordovaPlugin {
         if (requestId == 2) {
             this.temp.success("Success = Activity");
         }
+    }
+
+    CaptureService fp = new CaptureService();
+    public void createCaptureService(CallbackContext callbackContext){
+        fp.createCaptureService();
+    }
+
+    public void startCaptureService(CallbackContext callbackContext){
+        fp.startCaptureService(callbackContext);
+    }
+
+    public void stopCaptureService(CallbackContext callbackContext) {
+        fp.stopCaptureService();
     }
 }

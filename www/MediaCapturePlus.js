@@ -11,3 +11,15 @@ exports.testOpenCamera = function (success, error) {
 exports.openImageAssessment = function (success, error) {
     exec(success, error, 'MediaCapturePlus', 'openImageAssessment');
 };
+
+exports.createCaptureServive = function (success, error) {
+    exec(success, error, 'MediaCapturePlus', 'createCaptureServive');
+};
+
+exports.startCaptureService = function (success, error) {
+    exec(success, error, 'MediaCapturePlus', 'startCaptureService');
+};
+
+exports.stopCaptureService = function (success, error) {
+    exec(success, error, 'MediaCapturePlus', 'stopCaptureService');
+};

@@ -8,7 +8,7 @@
     </js-module>
 
     <platform name="android">
-        <config-file parent="/widget" target="res/xml/config.xml" mode="merge">
+        <config-file parent="/*" target="res/xml/config.xml" mode="merge">
             <widget xmlns:android="http://schemas.android.com/apk/res/android" />
         </config-file>
         <config-file parent="/*" target="res/xml/config.xml">

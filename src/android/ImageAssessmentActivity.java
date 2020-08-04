@@ -50,7 +50,6 @@ public class ImageAssessmentActivity extends Activity implements View.OnClickLis
         Resources resources = getApplication().getResources();
         setContentView(resources.getIdentifier("image_assessment_layout", "layout", package_name));
 
-        image = findViewById(resources.getIdentifier("textview", "id", package_name));
         preview = findViewById(resources.getIdentifier("surface", "id", package_name));
 
         previewHolder = preview.getHolder();

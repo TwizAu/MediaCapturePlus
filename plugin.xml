@@ -8,14 +8,18 @@
     </js-module>
 
     <platform name="android">
+        <config-file parent="/widget" target="res/xml/config.xml" mode="merge">
+            <widget xmlns:android="http://schemas.android.com/apk/res/android" />
+        </config-file>
         <config-file parent="/*" target="res/xml/config.xml">
-            <widget id="test" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"></widget>
             <feature name="MediaCapturePlus">
                 <param name="android-package" value="cordova.plugin.mediacaptureplus.MediaCapturePlus" />
             </feature>
         </config-file>
-        <config-file parent="/manifest/" target="AndroidManifest.xml">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.CAMERA" />
+            <uses-feature android:name="android.hardware.camera" />
+            <uses-feature android:name="android.hardware.camera.autofocus" />
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <activity android:name="cordova.plugin.mediacaptureplus.ImageAssessmentActivity"></activity>

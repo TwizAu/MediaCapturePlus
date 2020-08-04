@@ -25,6 +25,9 @@ public class CaptureService extends CordovaPlugin {
 
     private Fotoapparat createFotoapparat() {
         return Fotoapparat
+                .with(this.cordova.getActivity().getApplicationContext())
+                .previewScaleType(ScaleType.CenterCrop)
+                .lensPosition(back())
                 .frameProcessor(new SampleFrameProcessor(callbackContext))
                 .cameraErrorCallback(new CameraErrorListener() {
                     @Override

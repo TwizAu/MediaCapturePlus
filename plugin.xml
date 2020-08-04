@@ -9,9 +9,13 @@
 
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
+            <widget id="test" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"></widget>
             <feature name="MediaCapturePlus">
                 <param name="android-package" value="cordova.plugin.mediacaptureplus.MediaCapturePlus" />
             </feature>
+        </config-file>
+        <config-file parent="/manifest/" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <activity android:name="cordova.plugin.mediacaptureplus.ImageAssessmentActivity"></activity>

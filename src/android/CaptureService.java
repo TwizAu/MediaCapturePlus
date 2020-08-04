@@ -9,8 +9,6 @@ import io.fotoapparat.exception.camera.CameraException;
 import io.fotoapparat.parameter.ScaleType;
 import io.fotoapparat.preview.Frame;
 import io.fotoapparat.preview.FrameProcessor;
-import io.fotoapparat.view.CameraView;
-import io.fotoapparat.view.FocusView;
 import org.apache.cordova.CallbackContext;
 import static io.fotoapparat.selector.LensPositionSelectorsKt.back;
 
@@ -22,13 +20,9 @@ public class CaptureService extends Activity {
         fotoapparat = createFotoapparat();
     }
 
-    private CameraView cameraView = new CameraView(this);
-    private FocusView focusView = new FocusView(this);
     private Fotoapparat createFotoapparat() {
         return Fotoapparat
                 .with(this)
-                .into(cameraView)
-                .focusView(focusView)
                 .previewScaleType(ScaleType.CenterCrop)
                 .lensPosition(back())
                 .frameProcessor(new SampleFrameProcessor(callbackContext))

@@ -1,7 +1,7 @@
 package cordova.plugin.mediacaptureplus;
 
 import android.app.Activity;
-import android.widget.Toast;
+import org.apache.cordova.CordovaPlugin;
 import org.jetbrains.annotations.NotNull;
 import io.fotoapparat.Fotoapparat;
 import io.fotoapparat.error.CameraErrorListener;
@@ -15,7 +15,7 @@ import io.fotoapparat.view.Preview;
 import org.apache.cordova.CallbackContext;
 import static io.fotoapparat.selector.LensPositionSelectorsKt.back;
 
-public class CaptureService extends Activity {
+public class CaptureService extends CordovaPlugin {
     private Fotoapparat fotoapparat;
     private CallbackContext callbackContext;
 
@@ -30,7 +30,7 @@ public class CaptureService extends Activity {
     };
     private Fotoapparat createFotoapparat() {
         return Fotoapparat
-                .with(this)
+                .with(this.cordova.getActivity().getApplicationContext())
                 .into(cr)
                 .previewScaleType(ScaleType.CenterCrop)
                 .lensPosition(back())

@@ -26,11 +26,11 @@ public class CaptureService extends Activity {
                 .with(this)
                 .previewScaleType(ScaleType.CenterCrop)
                 .lensPosition(back())
-                .frameProcessor(new SampleFrameProcessor())
+                .frameProcessor(new SampleFrameProcessor(callbackContext))
                 .cameraErrorCallback(new CameraErrorListener() {
                     @Override
                     public void onError(@NotNull CameraException e) {
-                        Toast.makeText(Test2.this, e.toString(), Toast.LENGTH_LONG).show();
+                        this.callbackContext.error("failed");
                     }
                 })
                 .build();
@@ -47,6 +47,13 @@ public class CaptureService extends Activity {
 }
 
 class SampleFrameProcessor implements FrameProcessor {
+    
+    private CallbackContext callbackContext;
+
+    SampleFrameProcessor(CallbackContext callbackContext){
+        this.callbackContext = callbackContext;
+    }
+    
     @Override
     public void process(@NotNull Frame frame) {
         System.out.println(frame + "Frame Res: " + frame.component1().width + "x" + frame.component1().height);

@@ -17,6 +17,27 @@ public class CaptureService extends Activity {
     private Fotoapparat fotoapparat;
     private CallbackContext callbackContext;
 
+    private CameraConfiguration cameraConfiguration = CameraConfiguration
+            .builder()
+            .photoResolution(standardRatio(
+                    highestResolution()
+            ))
+            .focusMode(firstAvailable(
+                    continuousFocusPicture(),
+                    autoFocus(),
+                    fixed()
+            ))
+            .flash(firstAvailable(
+                    autoRedEye(),
+                    autoFlash(),
+                    torch(),
+                    off()
+            ))
+            .previewFpsRange(highestFps())
+            .sensorSensitivity(highestSensorSensitivity())
+            .frameProcessor(new SampleFrameProcessor())
+            .build();
+
     public void createCaptureService() {
         fotoapparat = createFotoapparat();
     }

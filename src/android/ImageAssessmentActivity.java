@@ -96,6 +96,8 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
             }
         };
 
+        startCamera();
+
     }
 
     @Override

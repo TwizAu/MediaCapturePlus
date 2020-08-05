@@ -34,7 +34,7 @@
         <source-file src="src/android/image_assessment_layout.xml" target-dir="res/layout" />
         <source-file src="src/android/recview_question.xml" target-dir="res/layout" />
         <source-file src="src/android/radio_answer_custom.xml" target-dir="res/drawable" />
-        <source-file src="src/android/radio_question_text.xml" target-dir="res/drawable" />
+        <source-file src="src/android/radio_answer_text.xml" target-dir="res/drawable" />
     </platform>
 
 

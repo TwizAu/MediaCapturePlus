@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageAssessmentActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -94,7 +95,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
             public void onPictureTaken(byte[] data, Camera camera) {
                 FileOutputStream outStream;
                 try {
-                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
+                    outStream = new FileOutputStream(
+                            String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg",
+                                    System.currentTimeMillis()));
                     outStream.write(data);
                     outStream.close();
                     System.out.println("onPictureTaken - wrote bytes: " + data.length);
@@ -120,8 +123,15 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         }
         Camera.Parameters param;
         param = camera.getParameters();
-        param.setPreviewFpsRange(20, 40);
-        param.setPreviewSize(256, 256);
+
+        List<Camera.Size> previewSizes = param.getSupportedPreviewSizes();
+        Camera.Size previewSize = previewSizes.get(0);
+        param.setPreviewSize(previewSize.width, previewSize.height);
+
+        List<int[]> previewFpsRanges = param.getSupportedPreviewFpsRange();
+        int[] previewFpsRange = previewFpsRanges.get(0);
+        param.setPreviewFpsRange(previewFpsRange[1], previewFpsRange[0]);
+
         camera.setParameters(param);
         try {
             camera.setPreviewDisplay(surfaceHolder);
@@ -136,10 +146,13 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         camera.release();
     }
 
-    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
+    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+    }
 
-    public void surfaceCreated(SurfaceHolder holder) {}
+    public void surfaceCreated(SurfaceHolder holder) {
+    }
 
-    public void surfaceDestroyed(SurfaceHolder holder) {}
+    public void surfaceDestroyed(SurfaceHolder holder) {
+    }
 
 }

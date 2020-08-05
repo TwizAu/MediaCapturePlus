@@ -31,7 +31,6 @@
         <source-file src="src/android/ImageCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/AudioCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/ImageAssessmentActivity.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
-        <source-file src="src/android/CaptureService.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/image_assessment_layout.xml" target-dir="res/layout" />
         <source-file src="src/android/recview_question.xml" target-dir="res/layout" />
         <source-file src="src/android/radio_answer_custom.xml" target-dir="res/drawable" />

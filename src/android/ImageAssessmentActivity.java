@@ -61,6 +61,17 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         questionsRec.setAdapter(adapter);
 
+        start.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                startCamera();
+            }
+        });
+
+        stop.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                stopCamera();
+            }
+        });
         capture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
                 captureImage();
@@ -85,7 +96,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
             public void onPictureTaken(byte[] data, Camera camera) {
                 FileOutputStream outStream;
                 try {
-                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
+                    outStream = new FileOutputStream(
+                            String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg",
+                                    System.currentTimeMillis()));
                     outStream.write(data);
                     outStream.close();
                     System.out.println("onPictureTaken - wrote bytes: " + data.length);
@@ -95,9 +108,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
                 System.out.println("onPictureTaken - jpeg");
             }
         };
-
-        startCamera();
-
     }
 
     @Override

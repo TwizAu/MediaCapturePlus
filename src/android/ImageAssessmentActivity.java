@@ -29,7 +29,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     Camera.PictureCallback rawCallback;
     Camera.ShutterCallback shutterCallback;
     Camera.PictureCallback jpegCallback;
-    Button start, stop, capture;
+    Button capture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         getActionBar().hide();
 
-        start = findViewById(resources.getIdentifier("btn_start", "id", package_name));
-        stop = findViewById(resources.getIdentifier("btn_stop", "id", package_name));
         capture = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
         surfaceView = findViewById(resources.getIdentifier("surface", "id", package_name));
         questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
@@ -61,17 +59,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         questionsRec.setAdapter(adapter);
 
-        start.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                startCamera();
-            }
-        });
-
-        stop.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                stopCamera();
-            }
-        });
         capture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
                 captureImage();
@@ -143,6 +130,20 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         List<int[]> previewFpsRanges = param.getSupportedPreviewFpsRange();
         int[] previewFpsRange = previewFpsRanges.get(0);
         param.setPreviewFpsRange(previewFpsRange[1], previewFpsRange[0]);
+
+        //Need to find out what is in these arrays
+        /* StringBuilder sb = new StringBuilder();
+        for (String s : previewSizes) {
+            sb.append(s);
+            sb.append("\t");
+        }
+        for (String s : previewFpsRanges) {
+            sb.append(s);
+            sb.append("\t");
+        }
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("previewOptions", sb.toString());
+        setResult(Activity.RESULT_OK, resultIntent); */
 
         camera.setParameters(param);
         try {

@@ -8,7 +8,8 @@
     </js-module>
 
     <platform name="android">
-        <framework src="io.fotoapparat:fotoapparat:2.7.0" />
+        <framework src="androidx.recyclerview:recyclerview:1.1.0" />
+        <framework src="androidx.constraintlayout:constraintlayout:1.1.3" />
         <edit-config file="res/xml/config.xml" target="/widget" mode="merge">
             <widget xmlns:android="http://schemas.android.com/apk/res/android" />
         </edit-config>
@@ -32,6 +33,9 @@
         <source-file src="src/android/ImageAssessmentActivity.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/CaptureService.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/image_assessment_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/recview_question.xml" target-dir="res/layout" />
+        <source-file src="src/android/radio_answer_custom.xml" target-dir="res/drawable" />
+        <source-file src="src/android/radio_question_text.xml" target-dir="res/drawable" />
     </platform>
 
 

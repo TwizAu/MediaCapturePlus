@@ -1,47 +1,34 @@
 package cordova.plugin.mediacaptureplus;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PointF;
 import android.hardware.Camera;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.view.Display;
-import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-import java.io.File;
+import android.widget.Button;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.FileOutputStream;
-import java.util.Calendar;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class ImageAssessmentActivity extends Activity implements View.OnClickListener {
+public class ImageAssessmentActivity extends Activity implements SurfaceHolder.Callback {
 
-    private SurfaceView preview = null;
-    private SurfaceHolder previewHolder = null;
-    private Camera camera = null;
-    private boolean inPreview = false;
-    ImageView image;
-    Bitmap bmp, itembmp;
-    static Bitmap mutableBitmap;
-    PointF start = new PointF();
-    PointF mid = new PointF();
-    float oldDist = 1f;
-    File imageFileName = null;
-    File imageFileFolder = null;
-    private MediaScannerConnection msConn;
-    Display d;
-    int screenhgt, screenwdh;
-    ProgressDialog dialog;
+    RecyclerView questionsRec;
+    QuestionRecyclerViewAdapter adapter;
+
+    Camera camera;
+    SurfaceView surfaceView;
+    SurfaceHolder surfaceHolder;
+    Camera.PictureCallback rawCallback;
+    Camera.ShutterCallback shutterCallback;
+    Camera.PictureCallback jpegCallback;
+    Button start, stop, capture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,179 +39,107 @@ public class ImageAssessmentActivity extends Activity implements View.OnClickLis
 
         getActionBar().hide();
 
-        preview = findViewById(resources.getIdentifier("surface", "id", package_name));
+        start = findViewById(resources.getIdentifier("btn_start", "id", package_name));
+        stop = findViewById(resources.getIdentifier("btn_stop", "id", package_name));
+        capture = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
+        surfaceView = findViewById(resources.getIdentifier("surface", "id", package_name));
+        questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
 
-        previewHolder = preview.getHolder();
-        previewHolder.addCallback(surfaceCallback);
-        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        ArrayList<String> questionsTemp = new ArrayList<>();
+        questionsTemp.add("This is a question 1?");
+        questionsTemp.add("This is a question 2?");
+        questionsTemp.add("This is a question 3?");
 
-        previewHolder.setFixedSize(getWindow().getWindowManager().getDefaultDisplay().getWidth(),
-                getWindow().getWindowManager().getDefaultDisplay().getHeight());
+        ArrayList<Integer> answersTemp = new ArrayList<>();
+        answersTemp.add(null);
+        answersTemp.add(null);
+        answersTemp.add(null);
 
-    }
+        questionsRec.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new QuestionRecyclerViewAdapter(this, questionsTemp, answersTemp);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        camera = Camera.open();
-    }
+        start.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                start_camera();
+            }
+        });
 
-    @Override
-    public void onPause() {
-        if (inPreview) {
-            camera.stopPreview();
-        }
+        stop.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                stop_camera();
+            }
+        });
 
-        camera.release();
-        camera = null;
-        inPreview = false;
-        super.onPause();
-    }
+        capture.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                captureImage();
+            }
+        });
 
-    private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
-        Camera.Size result = null;
-        for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
-            if (size.width <= width && size.height <= height) {
-                if (result == null) {
-                    result = size;
-                } else {
-                    int resultArea = result.width * result.height;
-                    int newArea = size.width * size.height;
-                    if (newArea > resultArea) {
-                        result = size;
-                    }
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        rawCallback = new Camera.PictureCallback() {
+            public void onPictureTaken(byte[] data, Camera camera) {
+                System.out.println("onPictureTaken - raw");
+            }
+        };
+
+        shutterCallback = new Camera.ShutterCallback() {
+            public void onShutter() {
+                System.out.println("onShutter'd");
+            }
+        };
+
+        jpegCallback = new Camera.PictureCallback() {
+            public void onPictureTaken(byte[] data, Camera camera) {
+                FileOutputStream outStream;
+                try {
+                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
+                    outStream.write(data);
+                    outStream.close();
+                    System.out.println("onPictureTaken - wrote bytes: " + data.length);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                System.out.println("onPictureTaken - jpeg");
             }
-        }
-        return (result);
+        };
+
     }
 
-    SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
-        public void surfaceCreated(SurfaceHolder holder) {
-            try {
-                camera.setPreviewDisplay(previewHolder);
-            } catch (Throwable t) {
-                Log.e("Demo-surfaceCallback", "Exception in setPreviewDisplay()", t);
-                Toast.makeText(ImageAssessmentActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size size = getBestPreviewSize(width, height, parameters);
-
-            if (size != null) {
-                parameters.setPreviewSize(size.width, size.height);
-                camera.setParameters(parameters);
-                camera.startPreview();
-                inPreview = true;
-            }
-        }
-
-        public void surfaceDestroyed(SurfaceHolder holder) {
-            // no-op
-        }
-    };
-
-    Camera.PictureCallback photoCallback = new Camera.PictureCallback() {
-        public void onPictureTaken(final byte[] data, final Camera camera) {
-            dialog = ProgressDialog.show(ImageAssessmentActivity.this, "", "Saving Photo");
-            new Thread() {
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception ex) {
-                    }
-                    onPictureTake(data, camera);
-                }
-            }.start();
-        }
-    };
-
-    public void onPictureTake(byte[] data, Camera camera) {
-
-        bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-        mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
-        savePhoto(mutableBitmap);
-        dialog.dismiss();
+    private void captureImage() {
+        camera.takePicture(shutterCallback, rawCallback, jpegCallback);
     }
 
-    class SavePhotoTask extends AsyncTask<byte[], String, String> {
-        @Override
-        protected String doInBackground(byte[]... jpeg) {
-            File photo = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
-            if (photo.exists()) {
-                photo.delete();
-            }
-            try {
-                FileOutputStream fos = new FileOutputStream(photo.getPath());
-                fos.write(jpeg[0]);
-                fos.close();
-            } catch (java.io.IOException e) {
-                Log.e("PictureDemo", "Exception in photoCallback", e);
-            }
-            return (null);
-        }
-    }
-
-    public void savePhoto(Bitmap bmp) {
-        imageFileFolder = new File(Environment.getExternalStorageDirectory(), "Rotate");
-        imageFileFolder.mkdir();
-        FileOutputStream out = null;
-        Calendar c = Calendar.getInstance();
-        String date = fromInt(c.get(Calendar.MONTH)) + fromInt(c.get(Calendar.DAY_OF_MONTH))
-                + fromInt(c.get(Calendar.YEAR)) + fromInt(c.get(Calendar.HOUR_OF_DAY)) + fromInt(c.get(Calendar.MINUTE))
-                + fromInt(c.get(Calendar.SECOND));
-        imageFileName = new File(imageFileFolder, date.toString() + ".jpg");
+    private void start_camera() {
         try {
-            out = new FileOutputStream(imageFileName);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-            scanPhoto(imageFileName.toString());
-            out = null;
+            camera = Camera.open();
+        } catch (RuntimeException e) {
+            System.out.println("init_camera: " + e);
+            return;
+        }
+        Camera.Parameters param;
+        param = camera.getParameters();
+        param.setPreviewFpsRange(20, 40);
+        param.setPreviewSize(256, 256);
+        camera.setParameters(param);
+        try {
+            camera.setPreviewDisplay(surfaceHolder);
+            camera.startPreview();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("init_camera: " + e);
         }
     }
 
-    public String fromInt(int val) {
-        return String.valueOf(val);
+    private void stop_camera() {
+        camera.stopPreview();
+        camera.release();
     }
 
-    public void scanPhoto(final String imageFileName) {
-        msConn = new MediaScannerConnection(ImageAssessmentActivity.this,
-                new MediaScannerConnection.MediaScannerConnectionClient() {
-                    public void onMediaScannerConnected() {
-                        msConn.scanFile(imageFileName, null);
-                        Log.i("obj in Photo Utility", "connection established");
-                    }
+    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
 
-                    public void onScanCompleted(String path, Uri uri) {
-                        msConn.disconnect();
-                        Log.i("obj in Photo Utility", "scan completed");
-                    }
-                });
-        msConn.connect();
-    }
+    public void surfaceCreated(SurfaceHolder holder) {}
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
-            onBack();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    public void onBack() {
-        Log.e("onBack :", "yes");
-        camera.takePicture(null, null, photoCallback);
-        inPreview = false;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
+    public void surfaceDestroyed(SurfaceHolder holder) {}
 
 }

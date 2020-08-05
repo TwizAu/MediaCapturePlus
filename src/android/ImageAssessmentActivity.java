@@ -132,6 +132,8 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         int[] previewFpsRange = previewFpsRanges.get(0);
         param.setPreviewFpsRange(previewFpsRange[1], previewFpsRange[0]);
 
+        param.setRotation(90);
+
         camera.setParameters(param);
         try {
             camera.setPreviewDisplay(surfaceHolder);

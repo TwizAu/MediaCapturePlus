@@ -116,6 +116,12 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         stopCamera();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopCamera();
+    }
+
     private void captureImage() {
         camera.takePicture(shutterCallback, rawCallback, jpegCallback);
     }
@@ -148,8 +154,11 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     }
 
     private void stopCamera() {
-        camera.stopPreview();
-        camera.release();
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
     }
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {

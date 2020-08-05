@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package cordova.plugin.mediacaptureplus;
 
 import android.content.Context;
 import android.content.res.Resources;

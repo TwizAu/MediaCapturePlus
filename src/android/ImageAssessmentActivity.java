@@ -111,12 +111,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        startCamera();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         stopCamera();
@@ -159,6 +153,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     }
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+        startCamera();
     }
 
     public void surfaceCreated(SurfaceHolder holder) {

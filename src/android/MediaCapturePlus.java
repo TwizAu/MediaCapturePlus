@@ -67,7 +67,7 @@ public class MediaCapturePlus extends CordovaPlugin {
             }
         }
         if (requestId == 2) {
-            this.temp.success("Success = Activity");
+            this.temp.success("Success - Activity");
         }
     }
 }

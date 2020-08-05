@@ -59,6 +59,8 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         questionsRec.setLayoutManager(new LinearLayoutManager(this));
         adapter = new QuestionRecyclerViewAdapter(this, questionsTemp, answersTemp);
 
+        questionsRec.setAdapter(adapter);
+
         start.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
                 start_camera();

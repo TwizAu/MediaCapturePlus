@@ -61,18 +61,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         questionsRec.setAdapter(adapter);
 
-        start.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                start_camera();
-            }
-        });
-
-        stop.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                stop_camera();
-            }
-        });
-
         capture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
                 captureImage();
@@ -97,9 +85,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
             public void onPictureTaken(byte[] data, Camera camera) {
                 FileOutputStream outStream;
                 try {
-                    outStream = new FileOutputStream(
-                            String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg",
-                                    System.currentTimeMillis()));
+                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
                     outStream.write(data);
                     outStream.close();
                     System.out.println("onPictureTaken - wrote bytes: " + data.length);
@@ -112,11 +98,23 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startCamera();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopCamera();
+    }
+
     private void captureImage() {
         camera.takePicture(shutterCallback, rawCallback, jpegCallback);
     }
 
-    private void start_camera() {
+    private void startCamera() {
         try {
             camera = Camera.open();
         } catch (RuntimeException e) {
@@ -134,8 +132,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         int[] previewFpsRange = previewFpsRanges.get(0);
         param.setPreviewFpsRange(previewFpsRange[1], previewFpsRange[0]);
 
-        param.setRotation(90);
-
         camera.setParameters(param);
         try {
             camera.setPreviewDisplay(surfaceHolder);
@@ -145,7 +141,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         }
     }
 
-    private void stop_camera() {
+    private void stopCamera() {
         camera.stopPreview();
         camera.release();
     }

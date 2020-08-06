@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +39,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     ImageView captureDisplay;
     int minLength;
     int currentCapture;
-    Button capture;
+    ImageButton capture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         surfaceView = findViewById(resources.getIdentifier("surface", "id", package_name));
         captureDisplay = findViewById(resources.getIdentifier("capture_display", "id", package_name));
         questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
-        
+
         captureDisplay.setVisibility(View.GONE);
 
         ArrayList<String> questionsTemp = new ArrayList<>();
@@ -82,19 +83,20 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         shutterCallback = new Camera.ShutterCallback() {
             public void onShutter() {
-                //Play Shutter Sound
+                // Play Shutter Sound
             }
         };
 
         rawCallback = new Camera.PictureCallback() {
-            public void onPictureTaken(byte[] data, Camera camera) { }
+            public void onPictureTaken(byte[] data, Camera camera) {
+            }
         };
 
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
-                
+
                 captureDisplay.setVisibility(View.VISIBLE);
-                
+
                 FileOutputStream outStream;
                 BitmapFactory.Options opt = new BitmapFactory.Options();
                 opt.inSampleSize = 1;
@@ -106,7 +108,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
                 bm.recycle();
 
                 try {
-                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
+                    outStream = new FileOutputStream(
+                            String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg",
+                                    System.currentTimeMillis()));
                     outStream.write(dataCropped);
                     outStream.close();
                     System.out.println("onPictureTaken - wrote bytes: " + dataCropped.length);
@@ -199,8 +203,10 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         startCamera();
     }
 
-    public void surfaceCreated(SurfaceHolder holder) { }
+    public void surfaceCreated(SurfaceHolder holder) {
+    }
 
-    public void surfaceDestroyed(SurfaceHolder holder) { }
+    public void surfaceDestroyed(SurfaceHolder holder) {
+    }
 
 }

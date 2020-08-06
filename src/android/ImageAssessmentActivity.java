@@ -1,6 +1,7 @@
 package cordova.plugin.mediacaptureplus;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -131,19 +132,20 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         int[] previewFpsRange = previewFpsRanges.get(0);
         param.setPreviewFpsRange(previewFpsRange[1], previewFpsRange[0]);
 
-        //Need to find out what is in these arrays
-        /* StringBuilder sb = new StringBuilder();
-        for (String s : previewSizes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < previewSizes.size(); i++) {
+            String s = previewSizes.get(i).width + "x" + previewSizes.get(i).height;
             sb.append(s);
             sb.append("\t");
         }
-        for (String s : previewFpsRanges) {
+        for (int i = 0; i < previewFpsRanges.size(); i++) {
+            String s = previewFpsRanges.get(i)[1] + "-" + previewFpsRanges.get(i)[0];
             sb.append(s);
             sb.append("\t");
         }
         Intent resultIntent = new Intent();
         resultIntent.putExtra("previewOptions", sb.toString());
-        setResult(Activity.RESULT_OK, resultIntent); */
+        setResult(Activity.RESULT_OK, resultIntent);
 
         camera.setParameters(param);
         try {

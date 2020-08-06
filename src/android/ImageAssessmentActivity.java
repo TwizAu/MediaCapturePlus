@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +35,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     Camera.PictureCallback rawCallback;
     Camera.ShutterCallback shutterCallback;
     Camera.PictureCallback jpegCallback;
+    ImageView captureDisplay;
     int minLength;
+    int currentCapture;
     Button capture;
 
     @Override
@@ -48,7 +51,10 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         capture = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
         surfaceView = findViewById(resources.getIdentifier("surface", "id", package_name));
+        captureDisplay = findViewById(resources.getIdentifier("capture_display", "id", package_name));
         questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
+        
+        captureDisplay.setVisibility(View.GONE);
 
         ArrayList<String> questionsTemp = new ArrayList<>();
         questionsTemp.add("This is a question 1?");
@@ -67,28 +73,29 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         capture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
-                captureImage();
+                camera.takePicture(shutterCallback, rawCallback, jpegCallback);
             }
         });
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
-        rawCallback = new Camera.PictureCallback() {
-            public void onPictureTaken(byte[] data, Camera camera) {
-                System.out.println("onPictureTaken - raw");
-            }
-        };
 
         shutterCallback = new Camera.ShutterCallback() {
             public void onShutter() {
-                System.out.println("onShutter'd");
+                //Play Shutter Sound
             }
+        };
+
+        rawCallback = new Camera.PictureCallback() {
+            public void onPictureTaken(byte[] data, Camera camera) { }
         };
 
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
+                
+                captureDisplay.setVisibility(View.VISIBLE);
+                
                 FileOutputStream outStream;
-
                 BitmapFactory.Options opt = new BitmapFactory.Options();
                 opt.inSampleSize = 1;
                 Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length, opt);
@@ -97,11 +104,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] dataCropped = stream.toByteArray();
                 bm.recycle();
-                
+
                 try {
-                    outStream = new FileOutputStream(
-                            String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg",
-                                    System.currentTimeMillis()));
+                    outStream = new FileOutputStream(String.format(Environment.getExternalStorageDirectory().getPath() + "/%d.jpg", System.currentTimeMillis()));
                     outStream.write(dataCropped);
                     outStream.close();
                     System.out.println("onPictureTaken - wrote bytes: " + dataCropped.length);
@@ -125,10 +130,6 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         stopCamera();
     }
 
-    private void captureImage() {
-        camera.takePicture(shutterCallback, rawCallback, jpegCallback);
-    }
-
     private void startCamera() {
         try {
             camera = Camera.open();
@@ -145,7 +146,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         Camera.Size pictureSize = pictureSizes.get(0);
         param.setPreviewSize(previewSize.width, previewSize.height);
         param.setPictureSize(pictureSize.width, pictureSize.height);
-        
+
         if (pictureSize.width < pictureSize.height) {
             minLength = pictureSize.width;
         } else {

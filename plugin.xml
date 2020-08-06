@@ -37,6 +37,12 @@
         <source-file src="src/android/recview_question.xml" target-dir="res/layout" />
         <source-file src="src/android/radio_answer_custom.xml" target-dir="res/drawable" />
         <source-file src="src/android/radio_answer_text.xml" target-dir="res/drawable" />
+        <source-file src="src/android/shutter_image.png" target-dir="res/drawable" />
+        <source-file src="src/android/shutter_video.png" target-dir="res/drawable" />
+        <source-file src="src/android/button_done.png" target-dir="res/drawable" />
+        <source-file src="src/android/button_next.png" target-dir="res/drawable" />
+        <source-file src="src/android/button_previous.png" target-dir="res/drawable" />
+        <source-file src="src/android/placeholder.jpg" target-dir="res/drawable" />
     </platform>
 
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/settings_bar"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/surface"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.view.SurfaceView
+        android:id="@+id/surface"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        app:layout_constraintDimensionRatio="w,1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_bar" />
+
+    <ImageView
+        android:id="@+id/capture_display"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/placeholder"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="w,1"/>
+
+    <View
+        android:id="@+id/options_tray"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="#000"
+        app:layout_constraintStart_toEndOf="@+id/surface"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_questions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/options_tray"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shutter_image"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/options_tray"
+        app:layout_constraintStart_toStartOf="@+id/options_tray"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/btn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_previous"
+        android:scaleX="0.35"
+        android:scaleY="0.35"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/options_tray"
+        app:layout_constraintStart_toStartOf="@+id/options_tray"
+        app:layout_constraintTop_toBottomOf="@+id/btn_capture" />
+
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_next"
+        android:scaleX="0.35"
+        android:scaleY="0.35"
+        app:layout_constraintBottom_toTopOf="@+id/btn_capture"
+        app:layout_constraintEnd_toEndOf="@+id/options_tray"
+        app:layout_constraintStart_toStartOf="@+id/options_tray"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_done"
+        android:scaleX="0.35"
+        android:scaleY="0.35"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_capture"
+        app:layout_constraintEnd_toEndOf="@+id/options_tray"
+        app:layout_constraintStart_toStartOf="@+id/options_tray"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

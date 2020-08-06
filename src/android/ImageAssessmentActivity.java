@@ -125,8 +125,10 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         param = camera.getParameters();
 
         List<Camera.Size> previewSizes = param.getSupportedPreviewSizes();
+        List<Camera.Size> pictureSizes = param.getSupportedPictureSizes();
         Camera.Size previewSize = previewSizes.get(0);
         param.setPreviewSize(previewSize.width, previewSize.height);
+        param.setPictureSize(previewSize.width, previewSize.height);
 
         List<int[]> previewFpsRanges = param.getSupportedPreviewFpsRange();
         int[] previewFpsRange = previewFpsRanges.get(0);
@@ -138,8 +140,13 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
             sb.append(s);
             sb.append("\t");
         }
+        for (int i = 0; i < pictureSizes.size(); i++) {
+            String s = pictureSizes.get(i).width + "x" + pictureSizes.get(i).height;
+            sb.append(s);
+            sb.append("\t");
+        }
         for (int i = 0; i < previewFpsRanges.size(); i++) {
-            String s = previewFpsRanges.get(i)[1] + "-" + previewFpsRanges.get(i)[0];
+            String s = previewFpsRanges.get(i)[0] + "-" + previewFpsRanges.get(i)[1];
             sb.append(s);
             sb.append("\t");
         }

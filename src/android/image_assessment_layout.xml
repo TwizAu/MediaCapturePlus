@@ -5,21 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/settings_bar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#000"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.view.SurfaceView
         android:id="@+id/surface"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="w,1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_bar"
-        app:layout_constraintDimensionRatio="w,1"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/capture_display"
@@ -33,16 +27,25 @@
         app:layout_constraintDimensionRatio="w,1"/>
 
     <View
+        android:id="@+id/settings_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#000"
+        android:alpha="0.5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
         android:id="@+id/options_tray"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:background="#000"
         app:layout_constraintTop_toBottomOf="@+id/surface" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_questions"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/options_tray" />

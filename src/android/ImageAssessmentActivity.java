@@ -95,12 +95,15 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
 
-                captureDisplay.setVisibility(View.VISIBLE);
-
                 FileOutputStream outStream;
                 BitmapFactory.Options opt = new BitmapFactory.Options();
                 opt.inSampleSize = 1;
                 Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length, opt);
+
+                Bitmap capture = Bitmap.createScaledBitmap(bm, captureDisplay.getWidth(), captureDisplay.getHeight(), true);
+                captureDisplay.setImageBitmap(capture);
+                captureDisplay.setVisibility(View.VISIBLE);
+
                 bm = Bitmap.createScaledBitmap(bm, minLength, minLength, true);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);

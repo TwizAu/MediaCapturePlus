@@ -38,8 +38,9 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
     Camera.PictureCallback jpegCallback;
     ImageView captureDisplay;
     int minLength;
-    int currentCapture;
-    ImageButton capture;
+    int currentCapture = 0;
+    int maxCapture = 3;
+    ImageButton capture, nextButton, previousButton, doneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +55,23 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         surfaceView = findViewById(resources.getIdentifier("surface", "id", package_name));
         captureDisplay = findViewById(resources.getIdentifier("capture_display", "id", package_name));
         questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
+        nextButton = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
+        previousButton = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
+        doneButton = findViewById(resources.getIdentifier("btn_capture", "id", package_name));
 
         captureDisplay.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.GONE);
+        previousButton.setVisibility(View.GONE);
+        doneButton.setVisibility(View.GONE);
 
         ArrayList<String> questionsTemp = new ArrayList<>();
         questionsTemp.add("This is a question 1?");
         questionsTemp.add("This is a question 2?");
         questionsTemp.add("This is a question 3?");
+        questionsTemp.add("This is a question 4?");
 
         ArrayList<Integer> answersTemp = new ArrayList<>();
+        answersTemp.add(null);
         answersTemp.add(null);
         answersTemp.add(null);
         answersTemp.add(null);
@@ -74,7 +83,26 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
 
         capture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
+                capture.setEnabled(false);
                 camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+            }
+        });
+
+        nextButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                currentCapture++;
+            }
+        });
+
+        previousButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                currentCapture--;
+            }
+        });
+
+        doneButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                
             }
         });
 
@@ -82,14 +110,11 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         surfaceHolder.addCallback(this);
 
         shutterCallback = new Camera.ShutterCallback() {
-            public void onShutter() {
-                // Play Shutter Sound
-            }
+            public void onShutter() { }
         };
 
         rawCallback = new Camera.PictureCallback() {
-            public void onPictureTaken(byte[] data, Camera camera) {
-            }
+            public void onPictureTaken(byte[] data, Camera camera) { }
         };
 
         jpegCallback = new Camera.PictureCallback() {
@@ -100,9 +125,30 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
                 opt.inSampleSize = 1;
                 Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length, opt);
 
-                Bitmap capture = Bitmap.createScaledBitmap(bm, captureDisplay.getWidth(), captureDisplay.getHeight(), true);
-                captureDisplay.setImageBitmap(capture);
+                Bitmap img = Bitmap.createScaledBitmap(bm, captureDisplay.getWidth(), captureDisplay.getHeight(), true);
+                captureDisplay.setImageBitmap(img);
                 captureDisplay.setVisibility(View.VISIBLE);
+                //capture.setVisibility(View.INVISIBLE);
+
+                /* if (maxCapture == 1) {
+                    nextButton.setVisibility(View.GONE);
+                    previousButton.setVisibility(View.GONE);
+                    doneButton.setVisibility(View.VISIBLE);
+                } else {
+                    if (currentCapture == 0) {
+                        nextButton.setVisibility(View.VISIBLE);
+                        previousButton.setVisibility(View.GONE);
+                        doneButton.setVisibility(View.GONE);
+                    } else if (currentCapture == maxCapture - 1) {
+                        nextButton.setVisibility(View.GONE);
+                        previousButton.setVisibility(View.VISIBLE);
+                        doneButton.setVisibility(View.VISIBLE);
+                    } else {
+                        nextButton.setVisibility(View.VISIBLE);
+                        previousButton.setVisibility(View.VISIBLE);
+                        doneButton.setVisibility(View.GONE);
+                    }
+                } */
 
                 bm = Bitmap.createScaledBitmap(bm, minLength, minLength, true);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

@@ -55,7 +55,7 @@ public class ImageAssessmentActivity extends Activity implements SurfaceHolder.C
         captureDisplay = findViewById(resources.getIdentifier("capture_display", "id", package_name));
         questionsRec = findViewById(resources.getIdentifier("rec_questions", "id", package_name));
 
-        captureDisplay.setVisibility(View.GONE);
+        captureDisplay.setVisibility(View.INVISIBLE);
 
         ArrayList<String> questionsTemp = new ArrayList<>();
         questionsTemp.add("This is a question 1?");

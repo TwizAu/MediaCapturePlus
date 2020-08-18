@@ -21,8 +21,10 @@
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.FLASHLIGHT"/>
             <uses-feature android:name="android.hardware.camera" />
             <uses-feature android:name="android.hardware.camera.autofocus" />
+            <uses-feature android:name="android.hardware.camera.flash" />
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <activity android:name="cordova.plugin.mediacaptureplus.ImageAssessmentActivity"></activity>
@@ -33,17 +35,28 @@
         <source-file src="src/android/AudioCaptureOptions.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/ImageAssessmentActivity.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
         <source-file src="src/android/QuestionRecyclerViewAdapter.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
-        <source-file src="src/android/image_assessment_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/LightboxRecyclerViewAdapter.java" target-dir="src/cordova/plugin/mediacaptureplus/MediaCapturePlus" />
+        <source-file src="src/android/layout/image_assessment_layout.xml" target-dir="res/layout" />
         <source-file src="src/android/layout-land/image_assessment_layout.xml" target-dir="res/layout-land" />
+        <source-file src="src/android/layout-sw600dp-port/image_assessment_layout.xml" target-dir="res/layout-sw600dp-port" />
+        <source-file src="src/android/layout-sw600dp-land/image_assessment_layout.xml" target-dir="res/layout-sw600dp-land" />
         <source-file src="src/android/recview_question.xml" target-dir="res/layout" />
+        <source-file src="src/android/recview_lightbox.xml" target-dir="res/layout" />
         <source-file src="src/android/radio_answer_custom.xml" target-dir="res/drawable" />
         <source-file src="src/android/radio_answer_text.xml" target-dir="res/drawable" />
-        <source-file src="src/android/shutter_image.png" target-dir="res/drawable" />
-        <source-file src="src/android/shutter_video.png" target-dir="res/drawable" />
-        <source-file src="src/android/button_done.png" target-dir="res/drawable" />
-        <source-file src="src/android/button_next.png" target-dir="res/drawable" />
-        <source-file src="src/android/button_previous.png" target-dir="res/drawable" />
-        <source-file src="src/android/placeholder.jpg" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/shutter_image.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/shutter_video.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/button_done.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/button_next.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/button_previous.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/button_redo.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/placeholder.jpg" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/baseline_flash_auto_white_36dp.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/baseline_flash_off_white_36dp.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/baseline_flash_on_white_36dp.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/baseline_flip_camera_android_white_36dp.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawables/baseline_close_white_36dp.png" target-dir="res/drawable" />
+
     </platform>
 
 
